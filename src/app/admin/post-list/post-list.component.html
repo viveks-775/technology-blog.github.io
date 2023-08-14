@@ -1,0 +1,95 @@
+<div class="container mt-5" *ngIf="!isShowCreatePost && !isEditPost">
+  <div class="d-flex justify-content-between mb-3">
+    <h4 class="mb-4">Blog Posts</h4>
+    <button class="btn btn-primary" (click)="onCreateBlogPost()">Create Post</button>
+  </div>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Short Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of posts">
+        <td>{{ post.title }}</td>
+        <td>
+          <div class="post-content">{{post.shortDescription}}</div>
+        </td>
+        <td>
+          <!-- <button class="btn btn-primary me-2">View</button> -->
+          <button class="btn btn-warning m-2" (click)="onEditPost(post)">Edit</button>
+          <button class="btn btn-danger m-2" (click)="onDeletePost(post)">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="posts.length < 1">
+        <td colspan="3">No records found!</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<app-confirmation-dialog *ngIf="showModal" [title]="'Delete Confirmation'" [selectedData]="selectedPost"
+  [message]="confirmMessage" (confirmed)="handleConfirm($event)" (cancelled)="handleCancel()"></app-confirmation-dialog>
+
+<div *ngIf="loadingService.loading$ | async" class="loader-overlay">
+  Loading...
+</div>
+<!-- post-create.component.html -->
+<div class="container mt-5" *ngIf="isShowCreatePost || isEditPost">
+  <div class="jumbotron">
+    <h4 class="mb-4">{{!isEditPost?'Create Post':'Update Post'}}</h4>
+    <form #postForm="ngForm" (ngSubmit)="onAddPost(postForm)">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" required [(ngModel)]="blogPost.title" name="title" />
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" name="category" class="form-control" [(ngModel)]="blogPost.category" required>
+          <option value="" disabled>Select a category</option>
+          <option *ngFor="let option of categoryList" [value]="option.id">{{ option.name }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="author">Author</label>
+        <input type="text" class="form-control" id="author" required [(ngModel)]="blogPost.author" name="author" />
+      </div>
+
+      <div class="form-group">
+        <label for="tags">Tags</label>
+        <input type="text" class="form-control" id="tags" required [(ngModel)]="blogPost.tags" name="tags" />
+      </div>
+
+      <div class="form-group">
+        <label for="shortDescription">Short Description</label>
+        <input type="text" class="form-control" id="shortDescription" required [(ngModel)]="blogPost.shortDescription"
+          name="shortDescription" />
+      </div>
+
+      <div class="form-group">
+        <label for="postImage">Post Image</label>
+        <input type="file" class="form-control" id="pImage" required name="pImage" accept="image/*"
+          (change)="onFileSelected($event)" />
+        <div *ngIf="blogPost.postImage">
+          <img [src]="blogPost.postImage" class="post-image" alt="Selected Image" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="content">Content</label>
+        <quill-editor [(ngModel)]="blogPost.content" [style]="{ height: '300px' }"
+          [ngModelOptions]="{ standalone: true }"></quill-editor>
+      </div>
+
+      <div class="action-btns">
+        <button type="button" class="m-2 btn btn-danger" (click)="hideForm()">Cancel</button>
+        <button type="submit" class="m-2 btn btn-primary" [disabled]="!postForm.valid">{{!isEditPost?'Create
+          Post':'Update Post'}}</button>
+      </div>
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div *ngIf="loadingService.loading$ | async" class="loader-overlay">
+  Loading...
+</div>
+<div class="container-fluid p-5 bg-primary-container text-white text-center">
+  <h1>Welcome to TechBuzz!</h1>
+  <p>
+    TechBuzz is your ultimate source for the latest news, trends, and insights in the world of technology. Whether
+    you're a seasoned tech enthusiast or just getting started, we've got you covered with informative blogPosts, how-to
+    guides, and in-depth analyses.
+  </p>
+</div>
+
+<!-- <div class="container">
+  <div class="row mt-4 mb-4">
+    <div class="col-lg-8">
+      <h2>Recent News</h2>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-12 mb-3" *ngFor="let blogPost of blogPosts; trackBy: trackByFn">
+          <div class="card">
+            <img class="card-img-top img-fluid" src="https://picsum.photos/200/300" alt="Card image">
+            <div class="card-body">
+              <h4 class="card-title">{{blogPost.title}}</h4>
+              <div class="card-text inner-content" [innerHTML]="blogPost.shortDescription"></div>
+              <a [routerLink]="['/post', blogPost.id]" class="btn btn-primary">Read more...</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-sm-12">
+      <h2>News Links</h2>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let blogPost of blogPosts">
+          <a [routerLink]="['/post', blogPost.id]">
+            {{blogPost.title}}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div> -->
+
+
+
+<div class="container">
+  <div class="row mt-4 mb-4">
+    <div class="col-lg-8">
+      <h2>Recent News</h2>
+      <ng-container *ngIf="blogPosts.length > 0; else noPosts">
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-sm-12 mb-3" *ngFor="let blogPost of blogPosts; trackBy: trackByFn">
+            <div class="card">
+              <img class="card-img-top img-fluid" [src]="blogPost.postImage" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">{{blogPost.title}}</h4>
+                <div class="card-text inner-content" [innerHTML]="blogPost.shortDescription"></div>
+                <a [routerLink]="['/post', blogPost.id]" class="btn btn-primary">Read more...</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noPosts>
+        <p>No upcoming news at the moment.</p>
+      </ng-template>
+    </div>
+    <div class="col-lg-4 col-sm-12">
+      <h2>News Links</h2>
+      <ng-container *ngIf="blogPosts.length > 0; else noPosts"></ng-container>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let blogPost of blogPosts">
+          <a [routerLink]="['/post', blogPost.id]">
+            {{blogPost.title}}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

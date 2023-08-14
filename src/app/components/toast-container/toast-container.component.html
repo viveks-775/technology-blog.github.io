@@ -1,0 +1,16 @@
+<div aria-live="polite" aria-atomic="true" class="toast-container position-fixed top-0 end-0 p-3">
+  <!-- Then put toasts within -->
+  <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true"
+    *ngFor="let toast of toastService.toasts" [ngClass]="toast.type" role="alert" aria-live="assertive"
+    aria-atomic="true">
+    <div class="toast-header">
+      <img src="assets/images/icons/info_icon.svg" class="rounded me-2" alt="...">
+      <strong class="me-auto">{{ toast.title }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+        (click)="toastService.remove(toast)"></button>
+    </div>
+    <div class="toast-body">
+      {{ toast.message }}
+    </div>
+  </div>
+</div>

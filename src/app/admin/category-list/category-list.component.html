@@ -1,0 +1,51 @@
+<div class="container mt-5" *ngIf="!this.isShowCreateCategory">
+  <div class="d-flex justify-content-between mb-3">
+    <h4 class="mb-4">Categories</h4>
+    <button class="btn btn-primary" (click)="onCreateCategory()">Create Category</button>
+  </div>
+
+  <app-confirmation-dialog *ngIf="showModal" [title]="'Delete Confirmation'" [selectedData]="selectedCategory"
+    [message]="confirmMessage" (confirmed)="handleConfirm($event)"
+    (cancelled)="handleCancel()"></app-confirmation-dialog>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Category Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categoryList">
+        <td>{{ category.name }}</td>
+        <td>
+          <button class="btn btn-primary me-2">View</button>
+          <button class="btn btn-warning me-2" (click)="onEditCategory(category)">Edit</button>
+          <button class="btn btn-danger" (click)="onDeleteCategory(category)">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="categoryList.length < 1">
+        <td colspan="3">No records found!</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="loadingService.loading$ | async" class="loader-overlay">
+  Loading...
+</div>
+<!-- post-create.component.html -->
+<div class="container mt-5" *ngIf="this.isShowCreateCategory">
+  <div class="jumbotron p-4">
+    <h2>Create New Category</h2>
+    <form #categoryForm="ngForm" (ngSubmit)="onSubmit(categoryForm)">
+      <div class="form-group">
+        <label for="name">Category Name</label>
+        <input type="text" id="name" name="name" class="form-control" [(ngModel)]="category.name" required />
+      </div>
+      <button type="submit" class="m-2 btn btn-primary" [disabled]="!categoryForm.valid">
+        {{isEdit?'Update Category':'Create Category'}}</button>
+      <button type="button" class="m-2 btn btn-danger" (click)="hideForm()">Cancel</button>
+    </form>
+  </div>
+</div>

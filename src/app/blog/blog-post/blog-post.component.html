@@ -1,0 +1,25 @@
+<section class="container mt-4 mb-4">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card" *ngIf="blogPost">
+        <img class="card-img-top" [src]="blogPost.postImage" alt="Card image">
+        <div class="card-body">
+          <h4 class="card-title">{{blogPost.title}}</h4>
+          <p class="card-subtitle text-muted mb-2">{{ blogPost.createdAt | date }}</p>
+          <div class="inner-content" [innerHTML]="blogPost.content"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h2 class="mb-3">Related News</h2>
+      <div class="list-group">
+        <ng-container *ngIf="relatedPosts.length > 0; else noRelatedPosts"></ng-container>
+        <a id="blogPost_{{i}}" [routerLink]="['/post', relatedPost.id]" class="list-group-item"
+          *ngFor="let relatedPost of relatedPosts; let i=index">{{ relatedPost.title }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #noRelatedPosts>
+  <p>No related news at the moment.</p>
+</ng-template>
