@@ -82,7 +82,7 @@ export class PostListComponent implements OnInit {
   onEditPost(blogPost: BlogPost) {
     this.isEditPost = true;
     this.blogPost.id = blogPost.id;
-    this.blogPost.title=blogPost.title;
+    this.blogPost.title = blogPost.title;
     this.blogPost.category = blogPost.category;
     this.blogPost.author = blogPost.author;
     this.blogPost.tags = blogPost.tags;
@@ -139,7 +139,8 @@ export class PostListComponent implements OnInit {
         console.log('AFTER UPDATE: this.posts: ', this.posts)
       },
       error: (error) => {
-        console.log('error: ', error)
+        console.log('error: ', error);
+        this.loadingService.hide(); // Hide loader
       },
       complete: () => {
         this.blogPost = {} as BlogPost;
@@ -160,7 +161,8 @@ export class PostListComponent implements OnInit {
 
       },
       error: (error) => {
-        console.log('error: ', error)
+        console.log('error: ', error);
+        this.loadingService.hide(); // Hide loader
       },
       complete: () => {
         this.blogPost = {} as BlogPost;
@@ -179,6 +181,7 @@ export class PostListComponent implements OnInit {
       },
       error: (error => {
         console.log('error while getting category list:', error);
+        this.loadingService.hide(); // Hide loader
       }),
       complete: () => {
         console.log("completed api");

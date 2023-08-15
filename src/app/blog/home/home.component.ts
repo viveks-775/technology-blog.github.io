@@ -27,7 +27,8 @@ export class HomeComponent implements OnInit {
         this.blogPosts = result;
       },
       error: (error) => {
-        console.log('error: ', error)
+        console.log('error: ', error);
+        this.loadingService.hide(); // Hide loader
       },
       complete: () => {
         this.loadingService.hide(); // Hide loader
