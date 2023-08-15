@@ -20,14 +20,13 @@ export class HomeComponent implements OnInit {
 
   getPosts(): void {
     this.loadingService.show(); // Show loader
-    // this.blogPosts = this.newsApiService.getPosts();
     this.blogPostService.getAll().subscribe({
       next: (result) => {
         console.log('getAll postresult: ', result)
         this.blogPosts = result;
       },
       error: (error) => {
-        console.log('error: ', error);
+        console.log('getPosts error: ', error);
         this.loadingService.hide(); // Hide loader
       },
       complete: () => {
