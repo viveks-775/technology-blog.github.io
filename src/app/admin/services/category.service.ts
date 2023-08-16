@@ -18,7 +18,7 @@ private baseUrl: string = 'https://technology-blog-node.onrender.com/api/categor
 
   createCategory(category: string|undefined): Observable<any> {
     const url = `${this.baseUrl}`; // Adjust the URL based on your API endpoints
-    return this.http.post(url, category);
+    return this.http.post(url, {name:category});
   }
 
 

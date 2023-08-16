@@ -77,7 +77,7 @@ export class CategoryListComponent {
           let res = result;
           this.categoryList[ind] = this.category;
         }
-        this.toastService.show('Category created successfully!', { type: 'bg-success', title: 'Success' });
+        this.toastService.show('Category updated successfully!', { type: 'bg-success', title: 'Success' });
       }),
       error: ((error) => {
         console.log("error:", error);
