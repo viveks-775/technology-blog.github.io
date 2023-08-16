@@ -4,46 +4,49 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from '../models/category.model';
 
-const baseUrl = 'http://localhost:8080/api/categories'; // Replace with your actual backend API URL
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
 
+  // private baseUrl = 'http://localhost:8080/api/categories'; 
+private baseUrl: string = 'https://technology-blog-node.onrender.com/api/categories';
+
   constructor(private http: HttpClient) {}
 
   createCategory(category: string|undefined): Observable<any> {
-    const url = `${baseUrl}`; // Adjust the URL based on your API endpoints
+    const url = `${this.baseUrl}`; // Adjust the URL based on your API endpoints
     return this.http.post(url, category);
   }
 
 
   getAll(): Observable<Category[]> {
-    return this.http.get<Category[]>(baseUrl);
+    return this.http.get<Category[]>(this.baseUrl);
   }
 
   get(id: any): Observable<Category> {
-    return this.http.get(`${baseUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}/${id}`);
   }
 
   create(data: any): Observable<any> {
-    return this.http.post(baseUrl, data);
+    return this.http.post(this.baseUrl, data);
   }
 
   update(id: any, data: any): Observable<any> {
-    return this.http.put(`${baseUrl}/${id}`, data);
+    return this.http.put(`${this.baseUrl}/${id}`, data);
   }
 
   delete(id: any): Observable<any> {
-    return this.http.delete(`${baseUrl}/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
   deleteAll(): Observable<any> {
-    return this.http.delete(baseUrl);
+    return this.http.delete(this.baseUrl);
   }
 
   findByName(title: any): Observable<Category[]> {
-    return this.http.get<Category[]>(`${baseUrl}?name=${title}`);
+    return this.http.get<Category[]>(`${this.baseUrl}?name=${title}`);
   }
 }
